@@ -13,6 +13,8 @@
 		00A66E6B296F814800081DCC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00A66E6A296F814800081DCC /* Preview Assets.xcassets */; };
 		00A66E73296F82C600081DCC /* chimeup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 00A66E71296F82C600081DCC /* chimeup.mp3 */; };
 		00A66E74296F82C600081DCC /* success.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 00A66E72296F82C600081DCC /* success.m4a */; };
+		00A66E7B296F8A2A00081DCC /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A66E7A296F8A2A00081DCC /* Home.swift */; };
+		00A66E7D296F8A3D00081DCC /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A66E7C296F8A3D00081DCC /* Onboarding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		00A66E71296F82C600081DCC /* chimeup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = chimeup.mp3; sourceTree = "<group>"; };
 		00A66E72296F82C600081DCC /* success.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = success.m4a; sourceTree = "<group>"; };
 		00A66E79296F87DA00081DCC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		00A66E7A296F8A2A00081DCC /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		00A66E7C296F8A3D00081DCC /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				00A66E65296F814700081DCC /* ContentView.swift */,
+				00A66E7A296F8A2A00081DCC /* Home.swift */,
+				00A66E7C296F8A3D00081DCC /* Onboarding.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -180,6 +186,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				00A66E66296F814700081DCC /* ContentView.swift in Sources */,
+				00A66E7B296F8A2A00081DCC /* Home.swift in Sources */,
+				00A66E7D296F8A3D00081DCC /* Onboarding.swift in Sources */,
 				00A66E64296F814700081DCC /* RestartApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
