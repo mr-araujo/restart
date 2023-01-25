@@ -10,6 +10,13 @@ import SwiftUI
 struct Onboarding: View {
     @AppStorage("onboarding") var isOnboardingActive = true
 
+    @State private var buttonWidth = UIScreen.main.bounds.width - 80
+    @State private var buttonOffSet = CGFloat(0)
+    @State private var isAnimating = false
+    @State private var imageOffSet: CGSize = .zero
+    @State private var arrowOpacity = 1.0
+    @State private var textTitle = "Share."
+
     var body: some View {
         ZStack {
             Color("ColorBlue").ignoresSafeArea(.all)
@@ -18,10 +25,12 @@ struct Onboarding: View {
                 Spacer()
 
                 VStack(spacing: 0) {
-                    Text("Share.")
+                    Text(textTitle)
                         .font(.system(size: 60))
                         .fontWeight(.heavy)
                         .foregroundColor(.white)
+                        .transition(.opacity)
+                        .id(textTitle)
 
                     Text("It's not how much we give but")
                     Text("how much love we put into giving")
@@ -31,14 +40,55 @@ struct Onboarding: View {
                 .fontWeight(.light)
                 .foregroundColor(.white)
                 .padding(.horizontal, 10)
+                .opacity(isAnimating ? 1 : 0)
+                .offset(y: isAnimating ? 0 : -40)
+                .animation(.easeOut(duration: 1), value: isAnimating)
 
                 ZStack {
                     CircleGroup(color: .white, opacity: 0.2)
+                        .offset(x: imageOffSet.width * -1)
+                        .blur(radius: abs(imageOffSet.width / 5))
+                        .animation(.easeOut(duration: 1), value: imageOffSet)
 
                     Image("character-1")
                         .resizable()
                         .scaledToFit()
+                        .animation(.easeOut(duration: 1), value: isAnimating)
+                        .offset(x: imageOffSet.width * 1.2, y: 0)
+                        .rotationEffect(.degrees(Double(imageOffSet.width / 15)))
+                        .animation(.easeOut(duration: 1), value: imageOffSet)
+                        .gesture(
+                            DragGesture()
+                                .onChanged { gesture in
+                                    if abs(imageOffSet.width) <= 150 {
+                                        imageOffSet = gesture.translation
+                                    }
+
+                                    withAnimation(.linear(duration: 0.25)) {
+                                        arrowOpacity = 0
+                                        textTitle = "Give."
+                                    }
+                                }
+                                .onEnded { _ in
+                                    imageOffSet = .zero
+
+                                    withAnimation(.linear(duration: 0.25)) {
+                                        arrowOpacity = 1
+                                        textTitle = "Share."
+                                    }
+                                }
+                        )
                 }
+                .overlay (
+                    Image(systemName: "arrow.left.and.right.circle")
+                        .font(.system(size: 44, weight: .ultraLight))
+                        .foregroundColor(.white)
+                        .offset(y: 20)
+                        .opacity(isAnimating ? 1 : 0)
+                        .animation(.easeOut(duration: 1).delay(2), value: isAnimating)
+                        .opacity(arrowOpacity)
+                    , alignment: .bottom
+                )
 
                 Spacer()
 
@@ -59,7 +109,7 @@ struct Onboarding: View {
                     HStack {
                         Capsule()
                             .fill(Color("ColorRed"))
-                            .frame(width: 80)
+                            .frame(width: buttonOffSet + 80)
 
                         Spacer()
                     }
@@ -78,16 +128,37 @@ struct Onboarding: View {
                         }
                         .foregroundColor(.white)
                         .frame(height: 80, alignment: .center)
-                        .onTapGesture {
-                            isOnboardingActive = false
-                        }
-
+                        .offset(x: buttonOffSet)
+                        .gesture(
+                            DragGesture()
+                                .onChanged { gesture in
+                                    if gesture.translation.width > 0 && buttonOffSet <= buttonWidth - 75  {
+                                        buttonOffSet = gesture.translation.width
+                                    }
+                                }
+                                .onEnded { _ in
+                                    withAnimation(Animation.easeOut(duration: 1)) {
+                                        if buttonOffSet > buttonWidth * 0.60 {
+                                            buttonOffSet = buttonWidth - 80
+                                            isOnboardingActive = false
+                                        } else {
+                                            buttonOffSet = 0
+                                        }
+                                    }
+                                }
+                        )
                         Spacer()
                     }
                 }
-                .frame(height: 80, alignment: .center)
+                .frame(width: buttonWidth, height: 80, alignment: .center)
                 .padding()
+                .opacity(isAnimating ? 1 : 0)
+                .offset(y: isAnimating ? 0 : 40)
+                .animation(.easeOut(duration: 1), value: isAnimating)
             }
+        }
+        .onAppear {
+            isAnimating = true
         }
     }
 }
