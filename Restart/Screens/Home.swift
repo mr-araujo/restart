@@ -22,7 +22,7 @@ struct Home: View {
                     .resizable()
                     .scaledToFit()
                     .padding()
-                    .offset(y: isAnimating ? 35 : -35)
+                    .offset(y: isAnimating ? -35 : 35)
                     .animation(
                         Animation
                             .easeOut(duration: 4)
@@ -42,6 +42,7 @@ struct Home: View {
 
             Button {
                 withAnimation {
+                    playSound(sound: "success", type: "m4a")
                     isOnboardingActive = true
                 }
             } label: {
